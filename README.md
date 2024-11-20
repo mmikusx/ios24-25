@@ -10,4 +10,6 @@
 
 :x: 5.0
 
-Kod: [Folder]()
+Kod: [Folder](https://github.com/mmikusx/ios24-25/tree/main/Calculator)
+
+![screenshot](Calculator/Kalkulator.png)
