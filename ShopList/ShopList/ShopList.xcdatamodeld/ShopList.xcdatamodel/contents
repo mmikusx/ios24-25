@@ -14,5 +14,14 @@
         <attribute name="nazwa" optional="YES" attributeType="String"/>
         <attribute name="opis" optional="YES" attributeType="String"/>
         <relationship name="kategoria" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Kategoria" inverseName="produkty" inverseEntity="Kategoria"/>
+        <relationship name="zamowienia" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Zamowienie" inverseName="produkty" inverseEntity="Zamowienie"/>
+    </entity>
+    <entity name="Zamowienie" representedClassName="Zamowienie" syncable="YES" codeGenerationType="class">
+        <attribute name="adres" optional="YES" attributeType="String"/>
+        <attribute name="data" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="klient" optional="YES" attributeType="String"/>
+        <attribute name="suma" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <relationship name="produkty" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Produkt" inverseName="zamowienia" inverseEntity="Produkt"/>
     </entity>
 </model>

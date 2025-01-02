@@ -16,6 +16,15 @@ class Kategoria(BaseModel):
     nazwa: str
 
 
+class Zamowienie(BaseModel):
+    id: str
+    data: str
+    klient: str
+    adres: str
+    suma: float
+    produkty: List[Produkt]
+
+
 kategorie = [
     Kategoria(id=str(uuid4()), nazwa="Owoce z API"),
     Kategoria(id=str(uuid4()), nazwa="Napoje z API"),
@@ -36,6 +45,25 @@ produkty = [
     Produkt(id=str(uuid4()), nazwa="Baton czekoladowy z API", cena=2.80, opis="Słodycze. Baton z nadzieniem karmelowym.")
 ]
 
+zamowienia = [
+    Zamowienie(
+        id=str(uuid4()),
+        data="2025-01-02",
+        klient="Jan Kowalski",
+        adres="ul. Kwiatowa 15, Kraków",
+        suma=12.48,
+        produkty=[produkty[0], produkty[1], produkty[4]]
+    ),
+    Zamowienie(
+        id=str(uuid4()),
+        data="2025-01-03",
+        klient="Anna Nowak",
+        adres="ul. Słoneczna 22, Warszawa",
+        suma=4.99,
+        produkty=[produkty[2], produkty[5], produkty[6], produkty[7]]
+    )
+]
+
 @app.get("/kategorie", response_model=List[Kategoria])
 def get_kategorie():
     return kategorie
@@ -44,3 +72,6 @@ def get_kategorie():
 def get_produkty():
     return produkty
 
+@app.get("/zamowienia", response_model=List[Zamowienie])
+def get_zamowienia():
+    return zamowienia

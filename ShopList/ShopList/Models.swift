@@ -19,3 +19,13 @@ struct KategoriaAPI: Codable, Identifiable {
     var id: String
     var nazwa: String
 }
+
+struct ZamowienieAPI: Codable, Identifiable {
+    var id: String
+    var data: String
+    var klient: String
+    var adres: String
+    var suma: Double
+    var produkty: [ProduktAPI]
+}
+

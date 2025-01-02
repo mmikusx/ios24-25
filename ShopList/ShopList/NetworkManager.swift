@@ -118,5 +118,80 @@ class NetworkManager {
             print("Błąd zapisu produktów: \(error)")
         }
     }
+    
+    func fetchZamowienia(completion: @escaping () -> Void) {
+        guard let url = URL(string: "http://localhost:8000/zamowienia") else { return }
+
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            if let error = error {
+                print("Błąd pobierania zamówień: \(error)")
+                completion()
+                return
+            }
+
+            guard let data = data else {
+                print("Brak danych dla zamówień")
+                completion()
+                return
+            }
+
+            do {
+                let zamowieniaAPI = try JSONDecoder().decode([ZamowienieAPI].self, from: data)
+                DispatchQueue.main.async {
+                    self.saveZamowieniaToCoreData(zamowieniaAPI)
+                    completion()
+                }
+            } catch {
+                print("Błąd dekodowania zamówień: \(error)")
+                completion()
+            }
+        }.resume()
+    }
+
+    
+    func saveZamowieniaToCoreData(_ zamowieniaAPI: [ZamowienieAPI]) {
+        let context = PersistenceController.shared.container.viewContext
+
+        for zamowienieAPI in zamowieniaAPI {
+            let fetchRequest: NSFetchRequest<Zamowienie> = Zamowienie.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id == %@", zamowienieAPI.id)
+
+            if let existingOrder = try? context.fetch(fetchRequest).first {
+                existingOrder.data = ISO8601DateFormatter().date(from: zamowienieAPI.data) ?? Date()
+                existingOrder.klient = zamowienieAPI.klient
+                existingOrder.adres = zamowienieAPI.adres
+                existingOrder.suma = NSDecimalNumber(value: zamowienieAPI.suma)
+            } else {
+                let noweZamowienie = Zamowienie(context: context)
+                noweZamowienie.id = UUID(uuidString: zamowienieAPI.id)
+                noweZamowienie.data = ISO8601DateFormatter().date(from: zamowienieAPI.data) ?? Date()
+                noweZamowienie.klient = zamowienieAPI.klient
+                noweZamowienie.adres = zamowienieAPI.adres
+                noweZamowienie.suma = NSDecimalNumber(value: zamowienieAPI.suma)
+
+                var produktyDoDodania: [Produkt] = []
+                for produktAPI in zamowienieAPI.produkty {
+                    let fetchProduct: NSFetchRequest<Produkt> = Produkt.fetchRequest()
+                    fetchProduct.predicate = NSPredicate(format: "id == %@", produktAPI.id)
+
+                    if let produkt = try? context.fetch(fetchProduct).first {
+                        produktyDoDodania.append(produkt) // Dodajemy produkt do listy
+                    }
+                }
+
+                // Dodanie całej listy produktów do zamówienia
+                noweZamowienie.addToProdukty(NSSet(array: produktyDoDodania))
+
+            }
+        }
+
+        do {
+            try context.save()
+            print("Zamówienia zapisane do Core Data")
+        } catch {
+            print("Błąd zapisu zamówień: \(error)")
+        }
+    }
+
 
 }
