@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23507" systemVersion="23H222" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="Kategoria" representedClassName="Kategoria" syncable="YES" codeGenerationType="class">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="nazwa" optional="YES" attributeType="String"/>
+        <relationship name="produkty" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Produkt" inverseName="kategoria" inverseEntity="Produkt"/>
+    </entity>
+    <entity name="Produkt" representedClassName="Produkt" syncable="YES" codeGenerationType="class">
+        <attribute name="cena" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="nazwa" optional="YES" attributeType="String"/>
+        <relationship name="kategoria" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Kategoria" inverseName="produkty" inverseEntity="Kategoria"/>
+    </entity>
+</model>
