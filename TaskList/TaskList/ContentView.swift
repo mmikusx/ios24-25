@@ -10,20 +10,24 @@ import SwiftUI
 struct Task: Identifiable {
     let id = UUID()
     let name: String
+    let imageName: String
 }
 
 struct ContentView: View {
     let tasks = [
-        Task(name: "Zrobić zakupy"),
-        Task(name: "Wyprowadzić psa"),
-        Task(name: "Skończyć projekt"),
-        Task(name: "Zadzwonić gdzieś")
+        Task(name: "Zrobić zakupy", imageName: "cart"),
+        Task(name: "Wyprowadzić psa", imageName: "dog"),
+        Task(name: "Skończyć projekt", imageName: "note"),
+        Task(name: "Zadzwonić gdzieś", imageName: "phone")
     ]
 
     var body: some View {
         NavigationView {
             List(tasks) { task in
-                Text(task.name)
+                HStack {
+                    Image(systemName: task.imageName)
+                    Text(task.name)
+                }
             }
                     .navigationTitle("Lista zadań")
         }
