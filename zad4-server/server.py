@@ -11,6 +11,7 @@ class Produkt(BaseModel):
     cena: float
     opis: str
 
+
 class Kategoria(BaseModel):
     id: str
     nazwa: str
@@ -21,10 +22,13 @@ class Zamowienie(BaseModel):
     data: str
     klient: str
     adres: str
-    suma: float
     produkty: List[Produkt]
 
+    def oblicz_sume(self) -> float:
+        return sum(produkt.cena for produkt in self.produkty)
 
+
+# Przykładowe dane
 kategorie = [
     Kategoria(id=str(uuid4()), nazwa="Owoce z API"),
     Kategoria(id=str(uuid4()), nazwa="Napoje z API"),
@@ -51,7 +55,6 @@ zamowienia = [
         data="2025-01-02",
         klient="Jan Kowalski",
         adres="ul. Kwiatowa 15, Kraków",
-        suma=12.48,
         produkty=[produkty[0], produkty[1], produkty[4]]
     ),
     Zamowienie(
@@ -59,19 +62,31 @@ zamowienia = [
         data="2025-01-03",
         klient="Anna Nowak",
         adres="ul. Słoneczna 22, Warszawa",
-        suma=4.99,
         produkty=[produkty[2], produkty[5], produkty[6], produkty[7]]
     )
 ]
+
 
 @app.get("/kategorie", response_model=List[Kategoria])
 def get_kategorie():
     return kategorie
 
+
 @app.get("/produkty", response_model=List[Produkt])
 def get_produkty():
     return produkty
 
-@app.get("/zamowienia", response_model=List[Zamowienie])
+
+@app.get("/zamowienia")
 def get_zamowienia():
-    return zamowienia
+    return [
+        {
+            "id": zamowienie.id,
+            "data": zamowienie.data,
+            "klient": zamowienie.klient,
+            "adres": zamowienie.adres,
+            "suma": zamowienie.oblicz_sume(),
+            "produkty": zamowienie.produkty
+        }
+        for zamowienie in zamowienia
+    ]
