@@ -9,6 +9,10 @@ import SwiftUI
 
 struct ProductDetailView: View {
     var produkt: Produkt
+    @EnvironmentObject var cartManager: CartManager
+    @Environment(\.presentationMode) var presentationMode
+
+    @State private var ilosc: Int = 1
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -23,7 +27,24 @@ struct ProductDetailView: View {
                 .font(.headline)
                 .foregroundColor(.green)
 
+            Stepper(value: $ilosc, in: 1...10) {
+                Text("Ilość: \(ilosc)")
+            }
+            .padding()
+
             Spacer()
+
+            Button(action: {
+                cartManager.dodajDoKoszyka(produkt, ilosc: ilosc)
+                presentationMode.wrappedValue.dismiss()
+            }) {
+                Text("Dodaj do koszyka")
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
         }
         .padding()
         .navigationTitle(produkt.nazwa ?? "Produkt")
