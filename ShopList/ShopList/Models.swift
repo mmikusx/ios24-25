@@ -13,7 +13,6 @@ struct ProduktAPI: Codable, Identifiable {
     var nazwa: String
     var cena: Double
     var opis: String
-    var kategoria_id: String
 }
 
 struct KategoriaAPI: Codable, Identifiable {

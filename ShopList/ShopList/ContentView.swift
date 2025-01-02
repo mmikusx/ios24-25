@@ -6,46 +6,46 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ContentView: View {
-    @State private var produkty: [ProduktAPI] = []
-    @State private var kategorie: [KategoriaAPI] = []
+    @Environment(\.managedObjectContext) private var viewContext
+
+    @FetchRequest(
+        entity: Kategoria.entity(),
+        sortDescriptors: [NSSortDescriptor(keyPath: \Kategoria.nazwa, ascending: true)]
+    ) private var kategorie: FetchedResults<Kategoria>
 
     var body: some View {
         NavigationView {
             List {
-                Section(header: Text("Kategorie")) {
-                    ForEach(kategorie) { kategoria in
-                        Text(kategoria.nazwa)
-                    }
-                }
-
-                Section(header: Text("Produkty")) {
-                    ForEach(produkty) { produkt in
-                        VStack(alignment: .leading) {
-                            Text(produkt.nazwa)
-                                .font(.headline)
-                            Text(produkt.opis)
-                                .font(.subheadline)
-                            Text(String(format: "%.2f zł", produkt.cena))
-                                .font(.footnote)
-                                .foregroundColor(.green)
+                ForEach(kategorie) { kategoria in
+                    Section(header: Text(kategoria.nazwa ?? "Brak nazwy")) {
+                        let produkty = kategoria.produkty?.allObjects as? [Produkt] ?? []
+                        ForEach(produkty) { produkt in
+                            VStack(alignment: .leading) {
+                                Text(produkt.nazwa ?? "Brak nazwy")
+                                    .font(.headline)
+                                Text(produkt.opis ?? "Brak opisu")
+                                    .font(.subheadline)
+                                Text(String(format: "%.2f zł", (produkt.cena as? NSDecimalNumber)?.doubleValue ?? 0.0))
+                                    .font(.footnote)
+                                    .foregroundColor(.green)
+                            }
                         }
                     }
+
                 }
             }
-            .navigationTitle("Dane z serwera")
+            .navigationTitle("Produkty i Kategorie")
             .onAppear {
-                NetworkManager.shared.fetchKategorie { dane in
-                    kategorie = dane
-                }
-                NetworkManager.shared.fetchProdukty { dane in
-                    produkty = dane
-                }
+                NetworkManager.shared.fetchKategorie {}
+                NetworkManager.shared.fetchProdukty {}
             }
         }
     }
 }
+
 
 #Preview {
     ContentView()
