@@ -12,6 +12,7 @@
         <attribute name="cena" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="nazwa" optional="YES" attributeType="String"/>
+        <attribute name="opis" optional="YES" attributeType="String"/>
         <relationship name="kategoria" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Kategoria" inverseName="produkty" inverseEntity="Kategoria"/>
     </entity>
 </model>

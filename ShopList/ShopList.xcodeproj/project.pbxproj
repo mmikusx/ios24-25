@@ -6,13 +6,6 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		5C17363A2D26F0D900D3853A /* Produkt+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1736392D26F0D900D3853A /* Produkt+CoreDataProperties.swift */; };
-		5C17363B2D26F0D900D3853A /* Kategoria+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1736372D26F0D900D3853A /* Kategoria+CoreDataProperties.swift */; };
-		5C17363C2D26F0D900D3853A /* Produkt+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1736382D26F0D900D3853A /* Produkt+CoreDataClass.swift */; };
-		5C17363D2D26F0D900D3853A /* Kategoria+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C1736362D26F0D900D3853A /* Kategoria+CoreDataClass.swift */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXContainerItemProxy section */
 		5C17361A2D26EF7A00D3853A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -34,10 +27,6 @@
 		5C1736042D26EF7800D3853A /* ShopList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShopList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C1736192D26EF7A00D3853A /* ShopListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShopListTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5C1736232D26EF7A00D3853A /* ShopListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShopListUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		5C1736362D26F0D900D3853A /* Kategoria+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Kategoria+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5C1736372D26F0D900D3853A /* Kategoria+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Kategoria+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		5C1736382D26F0D900D3853A /* Produkt+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Produkt+CoreDataClass.swift"; sourceTree = "<group>"; };
-		5C1736392D26F0D900D3853A /* Produkt+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Produkt+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -86,10 +75,6 @@
 		5C1735FB2D26EF7800D3853A = {
 			isa = PBXGroup;
 			children = (
-				5C1736362D26F0D900D3853A /* Kategoria+CoreDataClass.swift */,
-				5C1736372D26F0D900D3853A /* Kategoria+CoreDataProperties.swift */,
-				5C1736382D26F0D900D3853A /* Produkt+CoreDataClass.swift */,
-				5C1736392D26F0D900D3853A /* Produkt+CoreDataProperties.swift */,
 				5C1736062D26EF7800D3853A /* ShopList */,
 				5C17361C2D26EF7A00D3853A /* ShopListTests */,
 				5C1736262D26EF7A00D3853A /* ShopListUITests */,
@@ -251,10 +236,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5C17363A2D26F0D900D3853A /* Produkt+CoreDataProperties.swift in Sources */,
-				5C17363B2D26F0D900D3853A /* Kategoria+CoreDataProperties.swift in Sources */,
-				5C17363C2D26F0D900D3853A /* Produkt+CoreDataClass.swift in Sources */,
-				5C17363D2D26F0D900D3853A /* Kategoria+CoreDataClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
