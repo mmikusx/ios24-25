@@ -8,27 +8,45 @@
 import SwiftUI
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-    @StateObject var cartManager = CartManager()
+    @State private var produkty: [ProduktAPI] = []
+    @State private var kategorie: [KategoriaAPI] = []
 
     var body: some View {
-        TabView {
-            ProductListView()
-                .tabItem {
-                    Label("Produkty", systemImage: "list.bullet")
+        NavigationView {
+            List {
+                Section(header: Text("Kategorie")) {
+                    ForEach(kategorie) { kategoria in
+                        Text(kategoria.nazwa)
+                    }
                 }
-                .environmentObject(cartManager)
 
-            CartView()
-                .tabItem {
-                    Label("Koszyk", systemImage: "cart")
+                Section(header: Text("Produkty")) {
+                    ForEach(produkty) { produkt in
+                        VStack(alignment: .leading) {
+                            Text(produkt.nazwa)
+                                .font(.headline)
+                            Text(produkt.opis)
+                                .font(.subheadline)
+                            Text(String(format: "%.2f zł", produkt.cena))
+                                .font(.footnote)
+                                .foregroundColor(.green)
+                        }
+                    }
                 }
-                .environmentObject(cartManager)
+            }
+            .navigationTitle("Dane z serwera")
+            .onAppear {
+                NetworkManager.shared.fetchKategorie { dane in
+                    kategorie = dane
+                }
+                NetworkManager.shared.fetchProdukty { dane in
+                    produkty = dane
+                }
+            }
         }
     }
 }
 
 #Preview {
     ContentView()
-        .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }
