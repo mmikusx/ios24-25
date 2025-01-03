@@ -6,13 +6,13 @@
 
 :white_check_mark: 4.0
 
-:white_check_mark: 4.5
+:white_check_mark: 4.5 [Link do commita](https://github.com/mmikusx/ios24-25/commit/2968d0d9ed5449bb3c0edf389138933cec25fe66)
 
 :x: 5.0
 
 Kod: [Folder](https://github.com/mmikusx/ios24-25/tree/main/Calculator/Calculator)
 
-Demo: [Link do demo]()
+Demo: [Link do demo](https://github.com/mmikusx/ios24-25/blob/main/demos/Zadanie1-demo.md)
 
 ![screenshot](Calculator/Kalkulator.png)
 
@@ -30,7 +30,7 @@ Demo: [Link do demo]()
 
 Kod: [Folder](https://github.com/mmikusx/ios24-25/tree/main/TaskList/TaskList)
 
-Demo: [Link do demo]()
+Demo: [Link do demo](https://github.com/mmikusx/ios24-25/blob/main/demos/Zadanie2-demo.md)
 
 **Zadanie 3** Lista zakupów
 
@@ -46,7 +46,7 @@ Demo: [Link do demo]()
 
 Kod: [Folder](https://github.com/mmikusx/ios24-25/tree/7e5fa15c46be8086d2ff1afb90fb118b0482c669/ShopList/ShopList)
 
-Demo: [Link do demo]()
+Demo: [Link do demo](https://github.com/mmikusx/ios24-25/blob/main/demos/Zadanie3-demo.md)
 
 **Zadanie 4** Sieć
 
@@ -62,7 +62,7 @@ Demo: [Link do demo]()
 
 Kod: [Folder](https://github.com/mmikusx/ios24-25/tree/main/ShopList/ShopList)
 
-Demo: [Link do demo]()
+Demo: [Link do demo](https://github.com/mmikusx/ios24-25/blob/main/demos/Zadanie4-demo.md)
 
 **Zadanie 5** OAuth2
 
@@ -78,4 +78,4 @@ Demo: [Link do demo]()
 
 Kod: [Folder](https://github.com/mmikusx/ios24-25/tree/main/LoginApp/LoginApp)
 
-Demo: [Link do demo]()
+Demo: [Link do demo](https://github.com/mmikusx/ios24-25/blob/main/demos/Zadanie5-demo.md)
