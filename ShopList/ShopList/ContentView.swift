@@ -11,7 +11,6 @@ import CoreData
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
 
-    // FetchRequest dla kategorii, produktów i zamówień
     @FetchRequest(
         entity: Kategoria.entity(),
         sortDescriptors: [NSSortDescriptor(keyPath: \Kategoria.nazwa, ascending: true)]
@@ -27,15 +26,15 @@ struct ContentView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Zamowienie.data, ascending: false)]
     ) private var zamowienia: FetchedResults<Zamowienie>
 
-    // Zmienna do przełączania zakładek
     @State private var wybranaZakladka = 0
 
     @State private var wybranaKategoria: Kategoria? = nil
 
+    @State private var pokazFormularzDodawania = false
+
     var body: some View {
         NavigationView {
             VStack {
-                // Przełącznik zakładek
                 Picker("Widok", selection: $wybranaZakladka) {
                     Text("Produkty").tag(0)
                     Text("Kategorie").tag(1)
@@ -44,7 +43,6 @@ struct ContentView: View {
                 .pickerStyle(SegmentedPickerStyle())
                 .padding()
 
-                // Widok produktów z podziałem na kategorie
                 if wybranaZakladka == 0 {
                     List {
                         ForEach(kategorie) { kategoria in
@@ -57,11 +55,17 @@ struct ContentView: View {
                         }
                     }
                     .navigationTitle("Produkty")
+                    .navigationBarItems(trailing:
+                        Button(action: {
+                            pokazFormularzDodawania = true
+                        }) {
+                            Label("Dodaj Produkt", systemImage: "plus")
+                        }
+                    )
                 }
 
                 else if wybranaZakladka == 1 {
                     if let wybranaKategoria {
-                        // Lista produktów w wybranej kategorii
                         List {
                             let produktyKategorii = wybranaKategoria.produkty?.allObjects as? [Produkt] ?? []
                             ForEach(produktyKategorii) { produkt in
@@ -69,14 +73,12 @@ struct ContentView: View {
                             }
                         }
                         .navigationTitle(wybranaKategoria.nazwa ?? "Kategoria")
-                        .toolbar {
+                        .navigationBarItems(leading:
                             Button("Wróć") {
-                                resetujKategorie()
+                            resetujKategorie()
                             }
-                        }
-
+                        )
                     } else {
-                        // Lista samych kategorii
                         List {
                             ForEach(kategorie) { kategoria in
                                 Button(action: {
@@ -91,9 +93,6 @@ struct ContentView: View {
                     }
                 }
 
-
-
-                // Widok zamówień
                 else if wybranaZakladka == 2 {
                     List {
                         ForEach(zamowienia) { zamowienie in
@@ -106,7 +105,6 @@ struct ContentView: View {
                                         .foregroundColor(.blue)
                                 }
 
-                                // Produkty w zamówieniu
                                 let produkty = zamowienie.produkty?.allObjects as? [Produkt] ?? []
                                 ForEach(produkty) { produkt in
                                     ProduktRow(produkt: produkt)
@@ -118,27 +116,27 @@ struct ContentView: View {
                 }
             }
             .onAppear {
-                // Pobieranie danych z API
                 NetworkManager.shared.fetchKategorie {}
                 NetworkManager.shared.fetchProdukty {}
                 NetworkManager.shared.fetchZamowienia {}
             }
+            .sheet(isPresented: $pokazFormularzDodawania) {
+                FormularzDodawaniaProduktu(context: viewContext, kategorie: kategorie)
+            }
         }
     }
 
-    // Funkcja do obliczania sumy zamówienia
     private func obliczSume(zamowienie: Zamowienie) -> Double {
         let produkty = zamowienie.produkty?.allObjects as? [Produkt] ?? []
         return produkty.reduce(0.0) { $0 + (($1.cena as? NSDecimalNumber)?.doubleValue ?? 0.0) }
     }
     
-    func resetujKategorie() {
+    private func resetujKategorie() {
         wybranaKategoria = nil
     }
 
 }
 
-// Komponent do wyświetlania produktu
 struct ProduktRow: View {
     var produkt: Produkt
 
@@ -156,14 +154,55 @@ struct ProduktRow: View {
     }
 }
 
-// Formatowanie daty
+struct FormularzDodawaniaProduktu: View {
+    @Environment(\.presentationMode) var presentationMode
+    var context: NSManagedObjectContext
+    var kategorie: FetchedResults<Kategoria>
+
+    @State private var nazwa = ""
+    @State private var cena = ""
+    @State private var opis = ""
+    @State private var wybranaKategoria: Kategoria?
+
+    var body: some View {
+        NavigationView {
+            Form {
+                TextField("Nazwa produktu", text: $nazwa)
+                TextField("Cena", text: $cena)
+                    .keyboardType(.decimalPad)
+                TextField("Opis", text: $opis)
+
+                Picker("Kategoria", selection: $wybranaKategoria) {
+                    ForEach(kategorie) { kategoria in
+                        Text(kategoria.nazwa ?? "").tag(kategoria as Kategoria?)
+                    }
+                }
+
+                Button("Dodaj Produkt") {
+                    let nowyProdukt = Produkt(context: context)
+                    nowyProdukt.id = UUID()
+                    nowyProdukt.nazwa = nazwa
+                    nowyProdukt.opis = opis
+                    nowyProdukt.cena = NSDecimalNumber(string: cena)
+                    nowyProdukt.kategoria = wybranaKategoria
+
+                    try? context.save()
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
+            .navigationTitle("Nowy Produkt")
+            .toolbar {
+                Button("Anuluj") {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
+        }
+    }
+}
+
 private let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.dateStyle = .short
     formatter.timeStyle = .short
     return formatter
 }()
-
-#Preview {
-    ContentView()
-}
