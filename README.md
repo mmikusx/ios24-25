@@ -79,3 +79,19 @@ Demo: [Link do demo](https://github.com/mmikusx/ios24-25/blob/main/demos/Zadanie
 Kod: [Folder](https://github.com/mmikusx/ios24-25/tree/main/LoginApp/LoginApp)
 
 Demo: [Link do demo](https://github.com/mmikusx/ios24-25/blob/main/demos/Zadanie5-demo.md)
+
+**Zadanie 6** Płatności
+
+:white_check_mark: 3.0 [Link do commita](https://github.com/mmikusx/ios24-25/commit/0cadca1f1cac7534aa071a34d10010e94a9563ee)
+
+:x: 3.5
+
+:x: 4.0
+
+:x: 4.5
+
+:x: 5.0
+
+Kod: [Folder](https://github.com/mmikusx/ios24-25/tree/main/PaymentForm/PaymentForm)
+
+Demo: [Link do demo](https://github.com/mmikusx/ios24-25/blob/main/demos/Zadanie6-demo.md)
