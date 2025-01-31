@@ -95,3 +95,19 @@ Demo: [Link do demo](https://github.com/mmikusx/ios24-25/blob/main/demos/Zadanie
 Kod: [Folder](https://github.com/mmikusx/ios24-25/tree/main/PaymentForm/PaymentForm)
 
 Demo: [Link do demo](https://github.com/mmikusx/ios24-25/blob/main/demos/Zadanie6-demo.md)
+
+**Zadanie 7** Testy
+
+:white_check_mark: 3.0 [Link do commita](https://github.com/mmikusx/ios24-25/commit/e96d0fa4d2a112d8d52df1dfe8f0d5e68c2e3307)
+
+:x: 3.5
+
+:x: 4.0
+
+:x: 4.5
+
+:x: 5.0
+
+Kod: [Folder](https://github.com/mmikusx/ios24-25/tree/main/ShopList/ShopListTests)
+
+Demo: [Link do screenshota z outputem terminala i menu testów](https://github.com/mmikusx/ios24-25/blob/main/demos/Zadanie7-screen.md)
