@@ -12,6 +12,7 @@ class CartManager: ObservableObject {
     @Published var produktyWKoszyku: [Produkt: Int] = [:]
 
     func dodajDoKoszyka(_ produkt: Produkt, ilosc: Int) {
+        guard ilosc > 0 else { return }
         if let obecnaIlosc = produktyWKoszyku[produkt] {
             produktyWKoszyku[produkt] = obecnaIlosc + ilosc
         } else {
